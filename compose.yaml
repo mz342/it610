@@ -1,0 +1,30 @@
+
+version: '3'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:80"
+    volumes:
+      - ./swiftly-app:/project/swiftly-app
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=mysql://mz342:swiftly-d@db:3306/swiftly_db
+
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: swiftly-d
+      MYSQL_DATABASE: swiftly_db
+      MYSQL_USER: mz342
+      MYSQL_PASSWORD: swiftly-d
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
+
+
